@@ -2,6 +2,7 @@ import { createRouter, createWebHashHistory } from 'vue-router'
 import ListById from '../views/ListById.vue'
 import form from '../views/ListForm.vue'
 import List from '../views/List.vue'
+import SignUp from '../views/Signup.vue'
 
 
 const routes = [
@@ -19,6 +20,11 @@ const routes = [
     path: '/listById',
     name: 'listId',
     component: ListById
+  },
+  {
+    path: '/signUp',
+    name: 'signup',
+    component: SignUp
   },
 ]
 

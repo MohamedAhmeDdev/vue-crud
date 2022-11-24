@@ -17,7 +17,9 @@
 export default {};
 </script>
 
-<style>
+<style  scoped>
+
+
 form {
   max-width: 420px;
   height: 500px;

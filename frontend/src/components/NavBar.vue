@@ -4,6 +4,7 @@
       <ul>
     <router-link :to="{ name: 'list' }">Home</router-link>
     <router-link :to="{ name: 'form' }">AddList</router-link>
+    <router-link :to="{ name: 'signup' }">Signup</router-link>
       </ul>
      </nav>
     <router-view />
