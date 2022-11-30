@@ -2,17 +2,17 @@
   <div class="signup-container">
     <form @submit.prevent="signup">
       <label>UserName</label>
-      <input type="text" v-model="name" />
+      <input type="text" v-model="user.name" />
 
       <label>UserEmail</label>
-      <input type="text" v-model="email" />
+      <input type="text" v-model="user.email" />
       <div v-if="emailValidation" class="error">{{ emailValidation }}</div>
 
       <label>Password</label>
-      <input type="text" v-model="password" />
+      <input type="text" v-model="user.password" />
 
       <label>Confirm Password</label>
-      <input type="text" v-model="confirm_password" />
+      <input type="text" v-model="user.confirm_password" />
 
       <div v-if="error" class="error">{{ error }}</div>
       <button class="submit">submit</button>
@@ -21,24 +21,52 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
   data() {
     return {
-      name: "",
-      email: "",
-      password: "",
-      confirm_password: "",
+      user: {
+        name: "",
+        email: "",
+        password: "",
+        confirm_password: "",
+      },
       error: null,
       emailValidation: null,
     };
   },
-   methods: {
+  methods: {
     signup() {
       // validate all fields
-      this.error = this.password.length > 0 && this.name.length > 0 && this.email.length > 0 && this.confirm_password.length > 0 ? "" : "Field must be field";
+      this.error =
+        this.user.password.length > 0 &&
+        this.user.name.length > 0 &&
+        this.user.email.length > 0 &&
+        this.user.confirm_password.length > 0
+          ? ""
+          : "Field must be field";
 
       // validate email
-      this.emailValidation =  /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(this.email) ? "" : "Email is incorrect";
+      this.emailValidation =
+        /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(this.user.email)
+          ? ""
+          : "Email is incorrect";
+
+      axios.post("http://localhost:5000/users", this.user)
+        .then(() => {
+          // this.$router.push("/");
+          this.user = {
+            name: "",
+            email: "",
+            password: "",
+            confirm_password: "",
+          };
+        })
+        .catch((error) => {
+          if (error.response?.status === 400) {
+        alert("password does not much"); 
+      } 
+        });
     },
   },
 };

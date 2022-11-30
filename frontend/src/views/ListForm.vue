@@ -1,30 +1,59 @@
 <template>
   <div class="container">
-    <form>
+    <form @submit.prevent="handleSubmitForm">
       <label>Book Author</label>
-      <input type="text" />
+      <input type="text" v-model="book.author" />
 
       <label>Book Title</label>
-      <input type="text" />
+      <input type="text" v-model="book.title" />
 
       <label>Book Description</label>
-      <input type="text" />
+      <input type="text" v-model="book.description" />
+
+      <button class="submit">submit</button>
     </form>
   </div>
 </template>
 
 <script>
-export default {};
+import axios from "axios";
+
+export default {
+  data() {
+    return {
+      book: {
+        author: "",
+        title: "",
+        description: "",
+      },
+    };
+  },
+
+  methods: {
+    handleSubmitForm() {
+      axios.post("http://localhost:5000/books", this.book)
+        .then(() => {
+          this.$router.push("/");
+          this.book = {
+            author: "",
+            title: "",
+            description: "",
+          };
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+  },
+};
 </script>
 
-<style  scoped>
-
-
+<style scoped>
 form {
   max-width: 420px;
   height: 500px;
   margin: 30px auto;
-  background: #EFF5F5;
+  background: #eff5f5;
   text-align: left;
   padding: 40px;
   border-radius: 10px;
@@ -46,5 +75,14 @@ input {
   display: block;
   border: none;
   margin: 30px 0;
+}
+
+button{
+    background-color: rgba(95, 158, 160, 0.418);
+  letter-spacing: 1px;
+  outline: none;
+  border: none;
+  font-size: 15px;
+  padding: 8px 25px;
 }
 </style>

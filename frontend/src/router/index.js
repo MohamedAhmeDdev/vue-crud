@@ -17,7 +17,7 @@ const routes = [
     component: form
   },
   {
-    path: '/listById',
+    path: '/listById/:id',
     name: 'listId',
     component: ListById
   },
